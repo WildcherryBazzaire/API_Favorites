@@ -1,0 +1,131 @@
+#main, body, html  {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-family: 'Dosis', sans-serif;
+    background: rgb(235, 235, 235);
+}
+
+#main  {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+#header {
+    width: 100%;
+    height: 30%;
+    position: relative;
+    /* border: 1px solid black; */
+}
+
+#pageTitle {
+    display: table;
+    margin: 0 auto;
+    max-width: 25%;
+}
+
+#categories {
+    display: inline-flex;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    flex-direction: row;
+    justify-content: space-evenly;
+    bottom: 0%;
+    color: #666;
+}
+
+#categories > h3 {
+    display: inline-block;
+    font-size: 100%;
+}
+
+#cardContainer {
+    display: inline-flex;
+    width: 100%;
+    height:70%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card {
+    display: inline-flex;
+    width: 20em;
+    height: 37em;
+    overflow: hidden;
+    margin: 1em;
+    flex-direction: column;
+    box-shadow: 2px 4px 25px rgba(0, 0, 0, .1);
+    border-radius: 2%;
+    transition: all .2s linear;
+}
+
+.card > p {
+    text-align: center;
+}
+
+.card:hover {
+    box-shadow: 2px 8px 45px rgba(0, 0, 0, .3);
+}
+
+/* inside the card */
+.origin, .race {
+    color: #666;
+}
+
+.name {
+    margin: 0;
+    padding: 4% 0%;
+    font-size: 150%;
+    color: white;
+    background: linear-gradient(90deg, rgba(241,216,250,1) 0%, rgba(250,213,255,1) 40%, rgba(93,228,255,1) 100%);
+}
+
+.status {
+    width: 100%;
+    position: absolute;
+    bottom: 0%;
+    margin: 0;
+    padding: 4% 0%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 125%;
+    background: rgba(0,0,0,0.2);
+}
+
+.profileImage {
+    display:inline-block;
+    width: 100%;
+    height: 50%;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+}
+
+/* media Query Stuff */
+
+@media screen and (max-width: 900px) {
+    .card {
+      flex-basis:40%;
+    }
+  }
+
+@media screen and (max-width: 600px) {
+  .card {
+    flex-basis: 90%;
+  }
+  #pageTitle {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 383px) {
+    #categories > h3 {
+        font-size: 75%;
+    }
+    #pageTitle {
+        max-width: 100%;
+    }
+  }
