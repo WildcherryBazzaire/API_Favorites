@@ -1,52 +1,88 @@
 console.log('linked');
 
 const cardContainer = document.querySelector('#cardContainer');
-var cardData = [];
-var randomPageMorty = '?page=' + Math.floor(Math.random() * 25);
+const searchData = document.querySelector('#searchBar');
+const searchContainer = document.querySelector('#searchContainer')
+const RickAndMortyApi = 'https://rickandmortyapi.com/api/character/';
 
-var request = new XMLHttpRequest(); //assigns a new XMLHttpRequest object 
 var data; //where all JSON will be
 
-//open new connection, using GET to get url endpoint
-request.open('GET',`https://rickandmortyapi.com/api/character/${randomPageMorty}`,true);
+function Cards(apiLink,appendTo) {
+    let request = new XMLHttpRequest(); //assigns a new XMLHttpRequest object 
 
-//when request is loaded 
-request.onload = function() {
-    //JSON Stuff Here
-    data = JSON.parse(this.response); //gets the the JSON and converts it to an array, so data=[];
+    //open new connection, using GET to get url endpoint
+    request.open('GET',apiLink,true);
 
-    //console logs the data
-    data.results.forEach(cur => {
-        console.log(cur); //all the characters from rick and morty out of 1 page
+    //when request is loaded 
+    request.onload = function() {
+        //JSON Stuff Here
+        let data = JSON.parse(this.response); //gets the the JSON and converts it to an array, so data=[];
 
-        const actualCard = document.createElement('div'); //creates the card
-        actualCard.classList.add('card');
+        //console logs the data
+        data.results.map(cur => {
+           // console.log(cur); //all the characters from rick and morty out of 1 page
 
-        actualCard.innerHTML = `
-            <p class='name'>${cur.name}</p>
+            const actualCard = document.createElement('div'); //creates the card
+            actualCard.classList.add('card');
 
-            <div class='profileImage'> 
-                <p class='status'>${cur.status}</p>
-            </div> 
+            actualCard.innerHTML = templateBuilder('RickMorty',cur);
 
-            <p class='origin'>${cur.origin.name}</p>
-            <p class='race'>${cur.species}</p>
-        `;
+            let tempStatus = actualCard.getElementsByClassName('status')[0]; //gets their status
 
-        var tempStatus = actualCard.getElementsByClassName('status')[0]; //gets their status
+            actualCard.getElementsByClassName('profileImage')[0].style.backgroundImage = `url('${cur.image}')`; //adds image to background
 
-        actualCard.getElementsByClassName('profileImage')[0].style.backgroundImage = `url('${cur.image}')`; //adds image to background
+            cur.status === 'Dead' ? tempStatus.style.color = 'red' : tempStatus.style.color = 'green';
 
-        cur.status === 'Dead' ? tempStatus.style.color = 'red' : tempStatus.style.color = 'green';
+            return appendTo.appendChild(actualCard);
 
-        cardContainer.appendChild(actualCard);
-        
-        cardData.push(cardContainer); //data for cards
-
-    });
+        });
+    }
+    //Send request to website
+    request.send();
 }
 
-//Send request to website
-request.send();
+function templateBuilder(templateOption,loopedElement) {
+    
+    if(templateOption === 'RickMorty') {
+        return `
+                <p class='name'>${loopedElement.name}</p>
 
-console.log(data); // will appear undefined cause JS is asymetrical and will run this before the onload
+                <div class='profileImage'> 
+                    <p class='status'>${loopedElement.status}</p>
+                </div> 
+
+                <p class='origin'>${loopedElement.origin.name}</p>
+                <p class='race'>${loopedElement.species}</p>
+            `
+    }
+}
+
+function clearDiv(div) {
+    console.log(div.childNodes.length);
+    while(div.childNodes.length !== 3) {
+        div.removeChild(div.lastChild);
+    }
+}
+
+function Search() {
+    if(searchData.value !== ' ') {
+        clearDiv(searchContainer);
+        cardContainer.style.display = 'none';
+        searchContainer.style.display = 'inline-flex';
+        //console.log(RickAndMortyApi + searchData.value.toLowerCase());
+        Cards(RickAndMortyApi + `?name=${searchData.value.toLowerCase()}`,searchContainer);
+    }
+}
+
+function exitSearch() {
+    searchContainer.style.display = 'none';
+    cardContainer.style.display = 'inline-flex';
+}
+
+Cards(RickAndMortyApi + `?page=${Math.floor(Math.random() * 25)}`,cardContainer)
+
+// will appear undefined cause JS is asymetrical and will run this before the onload; UPDATE *Moving Everything in a function *
+
+//Tianmen Mountain cave, China
+
+//strech goal: put all functions in a class or use a instance of a class for something
