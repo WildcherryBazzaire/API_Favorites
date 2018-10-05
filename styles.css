@@ -1,3 +1,11 @@
+@keyframes RotatePortal {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
 #main, body, html  {
     width: 100%;
     height: 100%;
@@ -27,12 +35,25 @@
     max-width: 25%;
 }
 
+#exitButton {
+    display: none;
+    position: absolute;
+    max-width: 10%;
+    left: 0%;
+    z-index: 2;
+}
+
+#exitButton:hover {
+    animation-name: RotatePortal;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
 #searchStuff {
     display: inline-flex;
     width: 20rem;
     height: 2.5rem;
     margin: 0 auto;
-    
 }
 
 #searchBar {
@@ -42,11 +63,20 @@
     transition: all 1s ease;
     background: rgb(235, 235, 235);
     border: 2px palegreen solid;
-    border-radius: 5%;
 }
 
 #searchBar::selection {
     text-shadow: none;
+}
+
+#searchStuff > button {
+    background: rgb(235, 235, 235);
+    border: 2px palegreen solid;
+    border-left: none;
+}
+
+button:hover {
+    cursor: pointer;
 }
 
 #categories {
@@ -79,13 +109,6 @@
 
 #searchContainer {
     display: none;
-}
-
-#exitButton {
-    position: absolute;
-    max-width: 10%;
-    left: 0%;
-    z-index: 2;
 }
 
 .card {

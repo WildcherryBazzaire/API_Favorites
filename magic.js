@@ -3,6 +3,7 @@ console.log('linked');
 const cardContainer = document.querySelector('#cardContainer');
 const searchData = document.querySelector('#searchBar');
 const searchContainer = document.querySelector('#searchContainer')
+const exitButton = document.querySelector('#exitButton');
 const RickAndMortyApi = 'https://rickandmortyapi.com/api/character/';
 
 var data; //where all JSON will be
@@ -59,7 +60,7 @@ function templateBuilder(templateOption,loopedElement) {
 
 function clearDiv(div) {
     console.log(div.childNodes.length);
-    while(div.childNodes.length !== 3) {
+    while(div.firstChild) {
         div.removeChild(div.lastChild);
     }
 }
@@ -67,6 +68,7 @@ function clearDiv(div) {
 function Search() {
     if(searchData.value !== ' ') {
         clearDiv(searchContainer);
+        exitButton.style.display = 'inline-block';
         cardContainer.style.display = 'none';
         searchContainer.style.display = 'inline-flex';
         //console.log(RickAndMortyApi + searchData.value.toLowerCase());
@@ -75,6 +77,7 @@ function Search() {
 }
 
 function exitSearch() {
+    exitButton.style.display = 'none';
     searchContainer.style.display = 'none';
     cardContainer.style.display = 'inline-flex';
 }
